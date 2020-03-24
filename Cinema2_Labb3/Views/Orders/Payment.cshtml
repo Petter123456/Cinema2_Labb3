@@ -1,0 +1,35 @@
+﻿@using Microsoft.Extensions.Options;
+
+
+@{
+    ViewData["Title"] = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@ViewBag.movie
+@ViewBag.fullname
+@ViewBag.email
+@ViewBag.price
+@ViewBag.numberOfTickets
+@ViewBag.totalPrice
+
+
+
+<h1>Payment</h1>
+
+<form method="post" action="@Url.Action("Checkout", "Orders")">
+    <label>Price: @ViewBag.totalPrice</label>
+    <label>CreditCard</label>
+    <input type="text" id="creditCard" name="creditCard" minlength="10" maxlength="10" required />
+    <label>Expiry Date</label>
+    <input type="text" id="expiryDate" name="expiryDate" minlenght="4" maxlength="4" required />
+    <label>CVC Submit</label>
+    <input type="text" id="cvc" name="cvc" required maxlength="3" minlength="3" />
+    <input name="movie" type="hidden" value=@ViewBag.movie>
+    <input name="fullname" type="hidden" value=@ViewBag.fullname>
+    <input name="email" type="hidden" value=@ViewBag.email>
+    <input name="numberOfTickets" type="hidden" value=@ViewBag.numberOfTickets>
+    <input name="totalPrice" type="hidden" value=@ViewBag.TotalPrice>
+
+    <input type="submit" />
+</form>

@@ -25,10 +25,10 @@ namespace Cinema_Labb3.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=.;Database=Cinema2;Trusted_Connection=True;");
-            }
+            //if (!optionsBuilder.IsConfigured)
+            //{
+            //    optionsBuilder.UseSqlServer("Server=.;Database=Cinema2;Trusted_Connection=True;");
+            //}
         }
         public static byte[] ReadFile(string sPath)
         {
