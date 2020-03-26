@@ -1,0 +1,146 @@
+﻿@model IEnumerable<Cinema_Labb3.Models.DeNiroSalon>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<script type="text/javascript">
+        var entitiesToUpdate = [];
+
+    function myfunction() {
+        UpdateDb(); 
+    }
+
+              function UpdateDb() {
+           
+
+
+                   window.location.href = '@Url.Action("Edit", "DeNiroSalons")/' + entitiesToUpdate;
+
+
+            }
+
+
+
+        function SaveSeat(seat,availible) {
+            var boolAvailible;
+            var seatNumber;
+            var numberOfTickets = 0;
+
+            var x = document.getElementById(seat).value;
+
+            //console.log(x);
+
+
+
+            ToggleOccupied(seat, availible, numberOfTickets);
+
+
+
+
+
+
+
+
+
+        }
+
+        function ToggleOccupied(seat, availible, numberOfTickets) {
+
+
+
+            if (document.getElementById(seat).value !== true)
+            {
+                document.getElementById(seat).style.background = "red";
+                document.getElementById(seat).value = true;
+                boolAvailible = false;
+
+                var booked = {
+                    id: seat,
+                    bool: boolAvailible
+                };
+
+                entitiesToUpdate.push(booked);
+
+            } else {
+                document.getElementById(seat).style.background = "grey";
+                document.getElementById(seat).value = false;
+                boolAvailible = true
+
+                for (var i = 0; i < entitiesToUpdate.length; i++) {
+
+                    if (entitiesToUpdate[i].id == seat) {
+                        entitiesToUpdate.splice(i, 1);
+                    }
+                }
+            }
+        }
+
+
+
+    
+     
+
+</script>
+
+
+
+<h1>Select seats in the De-Niro-Salon</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Availible)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @{
+            var count = 0;
+        }
+
+
+        <tr>
+            @foreach (var item in Model)
+            {
+                //string x = "";
+                //string c = item.Availible.ToString();
+
+                //if(item.Availible == true)
+                //{
+                //    x = "true";
+                //}
+                //else
+                //{
+                //    x = "false";
+                //};
+
+
+
+                <td id=@item.Id>
+                    <button id=@item.Id onclick="SaveSeat(@item.Id, @item.Availible.ToString().ToLower())">  @item.Availible.ToString().ToLower() </button>
+                </td>
+
+            }
+
+        </tr>
+        <tr>
+            <td>
+                <button id="reserve" onclick="myfunction()">reserve</button>
+            </td>
+        </tr>
+
+
+
+
+    </tbody>
+
+
+</table>
+
+

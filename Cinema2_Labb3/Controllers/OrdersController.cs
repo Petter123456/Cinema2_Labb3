@@ -162,6 +162,21 @@ namespace Cinema2_Labb3.Controllers
 
         }
 
+        public async Task<IActionResult> SelectSeatsDeNiroSalon()
+        {
+            int rows = 10, columns = 10;
+            var salon = new int[rows][];
+            for (int i = 0; i < rows; i++)
+                salon[i] = new int[columns];
+
+            ViewBag.array = salon;
+            ViewBag.rows = rows;
+            ViewBag.columns = columns;
+
+            return View(await _context.DeNiroSalon.ToListAsync());
+        }
+     
+
         public IActionResult CustomerOrderConfirmation(string customerName, int tickets, int totalprice, Guid id)
         {
             ViewBag.customerName = customerName;
