@@ -6,83 +6,67 @@
 
 
 <script type="text/javascript">
-        var entitiesToUpdate = [];
-
-    function myfunction() {
-        UpdateDb(); 
-    }
-
-              function UpdateDb() {
-           
-
-
-                   window.location.href = '@Url.Action("Edit", "DeNiroSalons")/' + entitiesToUpdate;
-
-
-            }
 
 
 
-        function SaveSeat(seat,availible) {
-            var boolAvailible;
-            var seatNumber;
-            var numberOfTickets = 0;
+    var entitiesToUpdate = [];
+    var NoTickets = 0; 
 
-            var x = document.getElementById(seat).value;
-
-            //console.log(x);
+    function UpdateDb() {    
 
 
+        var params = { data: entitiesToUpdate, tickets: NoTickets };
 
-            ToggleOccupied(seat, availible, numberOfTickets);
+    $.ajax({
+        type: "GET",
+        url: "/DeNiroSalons/Edit",
+        data: params,
+        dataType: "json",
+        traditional: true
+    });
 
+        };
 
+    function SaveSeat(seat) {
 
-
-
-
-
-
-
+            ToggleOccupied(seat);
         }
 
+
+  
+
         function ToggleOccupied(seat, availible, numberOfTickets) {
-
-
 
             if (document.getElementById(seat).value !== true)
             {
                 document.getElementById(seat).style.background = "red";
                 document.getElementById(seat).value = true;
-                boolAvailible = false;
 
-                var booked = {
-                    id: seat,
-                    bool: boolAvailible
-                };
-
-                entitiesToUpdate.push(booked);
+                NoTickets = NoTickets + 1;  
+                entitiesToUpdate.push(seat.toString(16));
 
             } else {
                 document.getElementById(seat).style.background = "grey";
                 document.getElementById(seat).value = false;
-                boolAvailible = true
 
                 for (var i = 0; i < entitiesToUpdate.length; i++) {
 
-                    if (entitiesToUpdate[i].id == seat) {
+                    if (entitiesToUpdate[i] == seat) {
                         entitiesToUpdate.splice(i, 1);
                     }
                 }
+                NoTickets = NoTickets - 1; 
             }
+
+
         }
 
 
 
-    
-     
 
-</script>
+
+
+    </script>
 
 
 
@@ -98,49 +82,18 @@
         </tr>
     </thead>
     <tbody>
-
-
-        @{
-            var count = 0;
-        }
-
-
         <tr>
             @foreach (var item in Model)
             {
-                //string x = "";
-                //string c = item.Availible.ToString();
-
-                //if(item.Availible == true)
-                //{
-                //    x = "true";
-                //}
-                //else
-                //{
-                //    x = "false";
-                //};
-
-
-
                 <td id=@item.Id>
                     <button id=@item.Id onclick="SaveSeat(@item.Id, @item.Availible.ToString().ToLower())">  @item.Availible.ToString().ToLower() </button>
                 </td>
-
             }
 
         </tr>
-        <tr>
-            <td>
-                <button id="reserve" onclick="myfunction()">reserve</button>
-            </td>
-        </tr>
-
-
-
-
     </tbody>
-
-
 </table>
+
+<button onclick="UpdateDb()"></button>
 
 

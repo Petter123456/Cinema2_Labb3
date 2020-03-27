@@ -65,20 +65,22 @@ namespace Cinema2_Labb3.Controllers
         }
 
         // GET: DeNiroSalons/Edit/5
-        public async Task Edit(Array entities)
+        public async Task<IActionResult> Edit(string[] data, int tickets)
         {
 
-            foreach (var entity in entities)
+            int[] dataToInt = Array.ConvertAll(data, int.Parse);
+
+
+            foreach (var seat in dataToInt)
             {
-                var deNiroSalon2 = await _context.DeNiroSalon.FindAsync(entities[entity].id);
+                var deNiroSalon = await _context.DeNiroSalon.FindAsync(seat);
+                deNiroSalon.Availible = false;
+                _context.Update(deNiroSalon);
+                await _context.SaveChangesAsync(); 
             }
 
+            return RedirectToAction("OrderConfirmation", "Orders", new { movie = movie, fullname = fullname, email = email, price = price, numberOfTicket = numberOfTicket, totalPrice = totalPrice });
 
-            var deNiroSalon = await _context.DeNiroSalon.FindAsync(id);
-            deNiroSalon.Availible = availible;
-            await _context.SaveChangesAsync();
-
-           
         }
 
         // POST: DeNiroSalons/Edit/5
