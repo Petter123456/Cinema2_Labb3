@@ -25,10 +25,10 @@ namespace Cinema_Labb3.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //if (!optionsBuilder.IsConfigured)
-            //{
-            //    optionsBuilder.UseSqlServer("Server=.;Database=Cinema2;Trusted_Connection=True;");
-            //}
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=.;Database=Cinema4;Trusted_Connection=True;");
+            }
         }
         public static byte[] ReadFile(string sPath)
         {
@@ -56,26 +56,28 @@ namespace Cinema_Labb3.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            for (int i = 1; i <= 50; i++)
+            for (int i = 1; i <= 150; i++)
             {
                 modelBuilder.Entity<PaccinoSalon>().HasData(
 
                     new PaccinoSalon
                     {
                         Id = i,
-                        Availible = true
+                        Availible = true,
+                        
                     }
                 );
             };
 
-            for (int i = 1; i <= 100; i++)
+            for (int i = 1; i <= 300; i++)
             {
+               
                 modelBuilder.Entity<DeNiroSalon>().HasData(
 
                     new DeNiroSalon
                     {
                         Id = i,
-                        Availible = true
+                        Availible = true,
                     }
                 );
             };
@@ -87,7 +89,7 @@ namespace Cinema_Labb3.Models
                    Name = "Scarface",
                    Price = 160,
                    Image = ReadFile("Images/scarface.jpg"),
-                   Time = "17.00",
+                   Time = "16.00",
                    Salon = "Paccino-Salon"
                    //  Salon = "Paccino-Salon"
 
@@ -95,26 +97,59 @@ namespace Cinema_Labb3.Models
                new Movies
                {
                    Id = 3,
-                   Name = "The-GodFather-Part-1",
-                   Price = 150,
-                   Image = ReadFile("Images/theGoodFatherOne.jpg"),
-                   Time = "21.00",
+                   Name = "Scarface",
+                   Price = 160,
+                   Image = ReadFile("Images/scarface.jpg"),
+                   Time = "19.00",
                    Salon = "Paccino-Salon"
-
                    //  Salon = "Paccino-Salon"
 
                },
                new Movies
                {
                    Id = 4,
+                   Name = "Scarface",
+                   Price = 160,
+                   Image = ReadFile("Images/scarface.jpg"),
+                   Time = "21.30",
+                   Salon = "Paccino-Salon"
+                   //  Salon = "Paccino-Salon"
+
+               },
+              
+               new Movies
+               {
+                   Id = 5,
                    Name = "The-GodFather-Part-2",
                    Price = 170,
                    Image = ReadFile("Images/theGodFatherTwo.jpg"),
-                   Time = "21.00",
+                   Time = "16.00",
                    Salon = "De-Niro-Salon"
                    // Salon = "De-Niro-Salon"
 
-               }
+               },
+                new Movies
+                {
+                    Id = 6,
+                    Name = "The-GodFather-Part-2",
+                    Price = 170,
+                    Image = ReadFile("Images/theGodFatherTwo.jpg"),
+                    Time = "19.00",
+                    Salon = "De-Niro-Salon"
+                    // Salon = "De-Niro-Salon"
+
+                },
+                 new Movies
+                 {
+                     Id = 25,
+                     Name = "The-GodFather-Part-2",
+                     Price = 170,
+                     Image = ReadFile("Images/theGodFatherTwo.jpg"),
+                     Time = "21.30",
+                     Salon = "De-Niro-Salon"
+                     // Salon = "De-Niro-Salon"
+
+                 }
            );
 
 

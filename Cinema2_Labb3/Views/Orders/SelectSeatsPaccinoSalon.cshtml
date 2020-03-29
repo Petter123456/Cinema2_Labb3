@@ -98,9 +98,24 @@
         <tr>
             @foreach (var item in Model)
             {
-                <td id=@item.Id>
-                    <button id=@item.Id onclick="SaveSeat(@item.Id)">  @item.Availible.ToString().ToLower() </button>
-                </td>
+                if (ViewBag.time.Equals("16.00") && item.Id < 101)
+                {
+                    <td id=@item.Id>
+                        <button id=@item.Id onclick="SaveSeat(@item.Id)">  @item.Availible.ToString().ToLower() </button>
+                    </td>
+                }
+                else if (ViewBag.time.Equals("19.00") && item.Id > 100 && item.Id < 201)
+                {
+                    <td id=@item.Id>
+                        <button id=@item.Id onclick="SaveSeat(@item.Id)">  @item.Availible.ToString().ToLower() </button>
+                    </td>
+                }
+                else if (ViewBag.time.Equals("21.30") && item.Id > 200)
+                {
+                    <td id=@item.Id>
+                        <button id=@item.Id onclick="SaveSeat(@item.Id)">  @item.Availible.ToString().ToLower() </button>
+                    </td>
+                }
             }
 
         </tr>

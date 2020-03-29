@@ -10,6 +10,5 @@ namespace Cinema_Labb3.Models
         public int Id { get; set; }
         public bool Availible { get; set; }
 
-
     }
 }
