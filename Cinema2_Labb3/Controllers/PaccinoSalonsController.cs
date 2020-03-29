@@ -65,7 +65,7 @@ namespace Cinema2_Labb3.Controllers
         }
 
         // GET: PaccinoSalons/Edit/5
-        public async Task<IActionResult> EditAvailible(string fullname, string email, string entities, string NoOfTickets, string movie, string price, string time, string salon)
+        public async Task<IActionResult> EditAvailible(string fullname, string email, string entities, string NoOfTickets, string movie, string price, string time, string salon, string actualSeats)
         {
             List<string> numbers = new List<string>(entities.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 
@@ -78,7 +78,7 @@ namespace Cinema2_Labb3.Controllers
                 await _context.SaveChangesAsync();
             }
 
-          return  RedirectToAction("Payment", "Orders", new {fullname = fullname, email = email, entities = entities, NoOfTickets = NoOfTickets, movie = movie, price = price, time = time, salon = salon });
+          return  RedirectToAction("Payment", "Orders", new {fullname = fullname, email = email, entities = entities, NoOfTickets = NoOfTickets, movie = movie, price = price, time = time, salon = salon, actualSeats = actualSeats });
 
         }
 

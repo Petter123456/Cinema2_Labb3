@@ -187,7 +187,7 @@ namespace Cinema2_Labb3.Controllers
         }
 
 
-        public IActionResult CustomerOrderConfirmation(string fullname, int tickets, int totalprice, Guid id, string time, string salon, string seats)
+        public IActionResult CustomerOrderConfirmation(string fullname, int tickets, int totalprice, Guid id, string time, string salon, string seats, string actualSeats)
         {
             ViewBag.fullname = fullname;
             ViewBag.tickets = tickets;
@@ -195,7 +195,7 @@ namespace Cinema2_Labb3.Controllers
             ViewBag.totalprice = totalprice;
             ViewBag.time = time;
             ViewBag.salon = salon;
-            ViewBag.seats = seats;
+            ViewBag.actualSeats = actualSeats;
 
 
 
@@ -203,7 +203,7 @@ namespace Cinema2_Labb3.Controllers
 
         }
 
-        public async Task<IActionResult> Checkout(string creditCard, string expiryDate, string cvc, string movie, string fullname, string email, string numberOfTickets, string totalPrice,string time, string salon, string seats)
+        public async Task<IActionResult> Checkout(string creditCard, string expiryDate, string cvc, string movie, string fullname, string email, string numberOfTickets, string totalPrice,string time, string salon, string actualSeats)
         {
             newOrder = new Orders
             {
@@ -221,21 +221,22 @@ namespace Cinema2_Labb3.Controllers
             _context.Orders.Add(newOrder);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("CustomerOrderConfirmation", "Orders", new { fullname = fullname, tickets = numberOfTickets, totalprice = newOrder.TotalPrice, id = newOrder.Id, time = time, salon = salon, seats = seats });
+            return RedirectToAction("CustomerOrderConfirmation", "Orders", new { fullname = fullname, tickets = numberOfTickets, totalprice = newOrder.TotalPrice, id = newOrder.Id, time = time, salon = salon, actualSeats = actualSeats });
 
         }
 
-        public IActionResult Payment(string fullname, string email, string entities, string NoOfTickets, string movie, string price, string time, string salon)
+        public IActionResult Payment(string fullname, string email, string entities, string NoOfTickets, string movie, string price, string time, string salon, string actualSeats)
         {
 
             ViewBag.fullname = fullname;
             ViewBag.email = email;
-            ViewBag.seats = entities;
+            ViewBag.entities = entities;
             ViewBag.noTickets = NoOfTickets;
             ViewBag.movie = movie;
             ViewBag.price = price;
             ViewBag.time = time;
             ViewBag.salon = salon;
+            ViewBag.actualSeats = actualSeats; 
 
 
             return View();

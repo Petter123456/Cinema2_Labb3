@@ -10,24 +10,34 @@
 
 
     var entitiesToUpdate = [];
+    var actualSeats = [];
+
     var NoTickets = 0;
 
 
     function Order() {
-            var entitiesToOneString = "";
+        var entitiesToOneString = "";
+        var actualSeatsToOneString = "";
+
 
         for (var i = 0; i < entitiesToUpdate.length; i++) {
-            console.log(entitiesToUpdate[i] + "test");
+           // console.log(entitiesToUpdate[i] + "test");
 
             entitiesToOneString = entitiesToOneString.concat(entitiesToUpdate[i] + ",");
+        }
+        for (var i = 0; i < actualSeats.length; i++) {
+           // console.log(entitiesToUpdate[i] + "test");
+
+            actualSeatsToOneString = actualSeatsToOneString.concat(actualSeats[i] + ",");
         } 
 
-        console.log(entitiesToOneString);
+        //console.log(entitiesToOneString);
+
 
         document.getElementById("entities").value = entitiesToOneString;
         document.getElementById("NoOfTickets").value = NoTickets;
         document.getElementById("price").value = NoTickets * @ViewBag.price;
-
+        document.getElementById("actualSeats").value = actualSeatsToOneString;
 
 
                 @*var params = { data: entitiesToUpdate, tickets: NoTickets, movie: "@ViewBag.movie", price: "@ViewBag.price", time: "@ViewBag.time" };
@@ -42,31 +52,38 @@
 
     };
 
-    function SaveSeat(seat) {
-
-        ToggleOccupied(seat);
+    function SaveSeat(entities, seats) {
+        ToggleOccupied(entities, seats);
     }
 
 
 
 
-    function ToggleOccupied(seat) {
+    function ToggleOccupied(entities, seats) {
 
-        if (document.getElementById(seat).value !== true) {
-            document.getElementById(seat).style.background = "red";
-            document.getElementById(seat).value = true;
+        if (document.getElementById(entities).value !== true) {
+            document.getElementById(entities).style.background = "red";
+            document.getElementById(entities).value = true;
 
             NoTickets = NoTickets + 1;
-            entitiesToUpdate.push(seat);
+            entitiesToUpdate.push(entities);
+            actualSeats.push(String(seats));
+
 
         } else {
-            document.getElementById(seat).style.background = "grey";
-            document.getElementById(seat).value = false;
+            document.getElementById(entities).style.background = "grey";
+            document.getElementById(entities).value = false;
 
             for (var i = 0; i < entitiesToUpdate.length; i++) {
 
-                if (entitiesToUpdate[i] == seat) {
+                if (entitiesToUpdate[i] == entities) {
                     entitiesToUpdate.splice(i, 1);
+                }
+            }
+            for (var i = 0; i < actualSeats.length; i++) {
+
+                if (actualSeats[i] == seats) {
+                    actualSeats.splice(i, 1);
                 }
             }
             NoTickets = NoTickets - 1;
@@ -96,24 +113,34 @@
     </thead>
     <tbody>
         <tr>
+            @{var seat = 0;}
+
             @foreach (var item in Model)
             {
-                if (ViewBag.time.Equals("16.00") && item.Id < 101)
+                if (seat == 51)
                 {
-                    <td id=@item.Id>
-                        <button id=@item.Id onclick="SaveSeat(@item.Id)">  @item.Availible.ToString().ToLower() </button>
+                    seat = 0;
+                }
+
+                if(ViewBag.time.Equals("16.00") && item.Id < 101)
+                {
+                    seat++;
+                    <td id=@seat>
+                        <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
                     </td>
                 }
                 else if (ViewBag.time.Equals("19.00") && item.Id > 100 && item.Id < 201)
                 {
+                    seat++;
                     <td id=@item.Id>
-                        <button id=@item.Id onclick="SaveSeat(@item.Id)">  @item.Availible.ToString().ToLower() </button>
+                        <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
                     </td>
                 }
                 else if (ViewBag.time.Equals("21.30") && item.Id > 200)
                 {
+                    seat++;
                     <td id=@item.Id>
-                        <button id=@item.Id onclick="SaveSeat(@item.Id)">  @item.Availible.ToString().ToLower() </button>
+                        <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
                     </td>
                 }
             }
@@ -125,12 +152,14 @@
 <form method="post" action="@Url.Action("EditAvailible", "PaccinoSalons")">
     <input type="text" id="fullname" name="fullname" value="" required />
     <input type="text" id="email" name="email" value="" required />
-    <input type="text" id="entities" name="entities" value="" readonly />
+    <input type="hidden" id="entities" name="entities" value="" readonly />
     <input type="text" id="NoOfTickets" name="NoOfTickets" value="" readonly />
     <input type="text" id="movie" name="movie" value="@ViewBag.movie" readonly />
     <input type="text" id="price" name="price" value="" readonly />
     <input type="text" id="time" name="time" value="@ViewBag.time" readonly />
     <input type="text" id="salon" name="salon" value="Paccino-Salon" readonly />
+    <input type="text" id="actualSeats" name="actualSeats" value="" readonly />
+
 
     <input type="submit" id="submit" onclick="Order()" value="Confirm" />
 
