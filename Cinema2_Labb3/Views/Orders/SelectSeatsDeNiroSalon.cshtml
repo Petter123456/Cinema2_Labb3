@@ -10,68 +10,66 @@
 
 
     var entitiesToUpdate = [];
-    var NoTickets = 0; 
+    var NoTickets = 0;
 
-    function UpdateDb() {    
+    function UpdateDb() {
 
 
-        var params = { data: entitiesToUpdate, tickets: NoTickets };
+        var params = { data: entitiesToUpdate, tickets: NoTickets, movie: "@ViewBag.movie", price: "@ViewBag.price", time: "@ViewBag.time" };
 
-    $.ajax({
-        type: "GET",
-        url: "/DeNiroSalons/Edit",
-        data: params,
-        dataType: "json",
-        traditional: true
-    });
+        $.ajax({
+            type: "GET",
+            url: "/DeNiroSalons/EditAvailible",
+            data: params,
+            dataType: "json",
+            traditional: true
+        });
 
-        };
+    };
 
     function SaveSeat(seat) {
 
-            ToggleOccupied(seat);
-        }
+        ToggleOccupied(seat);
+    }
 
 
-  
 
-        function ToggleOccupied(seat, availible, numberOfTickets) {
 
-            if (document.getElementById(seat).value !== true)
-            {
-                document.getElementById(seat).style.background = "red";
-                document.getElementById(seat).value = true;
+    function ToggleOccupied(seat) {
 
-                NoTickets = NoTickets + 1;  
-                entitiesToUpdate.push(seat.toString(16));
+        if (document.getElementById(seat).value !== true) {
+            document.getElementById(seat).style.background = "red";
+            document.getElementById(seat).value = true;
 
-            } else {
-                document.getElementById(seat).style.background = "grey";
-                document.getElementById(seat).value = false;
+            NoTickets = NoTickets + 1;
+            entitiesToUpdate.push(seat.toString(16));
 
-                for (var i = 0; i < entitiesToUpdate.length; i++) {
+        } else {
+            document.getElementById(seat).style.background = "grey";
+            document.getElementById(seat).value = false;
 
-                    if (entitiesToUpdate[i] == seat) {
-                        entitiesToUpdate.splice(i, 1);
-                    }
+            for (var i = 0; i < entitiesToUpdate.length; i++) {
+
+                if (entitiesToUpdate[i] == seat) {
+                    entitiesToUpdate.splice(i, 1);
                 }
-                NoTickets = NoTickets - 1; 
             }
-
-
+            NoTickets = NoTickets - 1;
         }
 
 
+    }
 
 
 
 
-    </script>
+
+
+</script>
 
 
 
-<h1>Select seats in the De-Niro-Salon</h1>
-
+<h1>Select seats in the DeNiro-Salon</h1>
 <table class="table">
     <thead>
         <tr>
@@ -86,7 +84,7 @@
             @foreach (var item in Model)
             {
                 <td id=@item.Id>
-                    <button id=@item.Id onclick="SaveSeat(@item.Id, @item.Availible.ToString().ToLower())">  @item.Availible.ToString().ToLower() </button>
+                    <button id=@item.Id onclick="SaveSeat(@item.Id)">  @item.Availible.ToString().ToLower() </button>
                 </td>
             }
 

@@ -18,18 +18,20 @@
 <h1>Payment</h1>
 
 <form method="post" action="@Url.Action("Checkout", "Orders")">
-    <label>Price: @ViewBag.totalPrice</label>
     <label>CreditCard</label>
     <input type="text" id="creditCard" name="creditCard" minlength="10" maxlength="10" required />
     <label>Expiry Date</label>
     <input type="text" id="expiryDate" name="expiryDate" minlenght="4" maxlength="4" required />
     <label>CVC Submit</label>
     <input type="text" id="cvc" name="cvc" required maxlength="3" minlength="3" />
-    <input name="movie" type="hidden" value=@ViewBag.movie>
-    <input name="fullname" type="hidden" value=@ViewBag.fullname>
-    <input name="email" type="hidden" value=@ViewBag.email>
-    <input name="numberOfTickets" type="hidden" value=@ViewBag.numberOfTickets>
-    <input name="totalPrice" type="hidden" value=@ViewBag.TotalPrice>
+    <input name="movie" value=@ViewBag.movie readonly>
+    <input name="fullname" value=@ViewBag.fullname readonly>
+    <input name="email" value=@ViewBag.email readonly>
+    <input name="numberOfTickets" value=@ViewBag.noTickets readonly>
+    <input name="totalPrice" value=@ViewBag.price readonly>
+    <input name="time" value=@ViewBag.time readonly>
+    <input name="salon" value=@ViewBag.salon readonly>
+    <input name="seats" value=@ViewBag.seats readonly>
 
     <input type="submit" />
 </form>

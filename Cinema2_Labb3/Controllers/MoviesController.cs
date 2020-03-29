@@ -149,10 +149,15 @@ namespace Cinema2_Labb3.Controllers
             return _context.Movies.Any(e => e.Id == id);
         }
 
-        public IActionResult ConfirmOrder(string name, int price)
+        public IActionResult ConfirmOrder(string entities, string NoOfTickets, string movie, string price, string time)
         {
-            ViewBag.name = name;
+            
+            ViewBag.tickets = NoOfTickets;
+            ViewBag.seats = entities;
+            ViewBag.movie = movie;
             ViewBag.price = price;
+            ViewBag.time = time;
+
 
             return View();
         }

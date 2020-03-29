@@ -162,34 +162,48 @@ namespace Cinema2_Labb3.Controllers
 
         }
 
-        public async Task<IActionResult> SelectSeatsDeNiroSalon()
+        public async Task<IActionResult> SelectSeatsDeNiroSalon(string name, int price, string time)
         {
-            int rows = 10, columns = 10;
-            var salon = new int[rows][];
-            for (int i = 0; i < rows; i++)
-                salon[i] = new int[columns];
 
-            ViewBag.array = salon;
-            ViewBag.rows = rows;
-            ViewBag.columns = columns;
+
+            ViewBag.movie = name.Trim().ToString();
+            ViewBag.price = price.ToString().Trim();
+            ViewBag.time = time.Trim().ToString();
+
+
 
             return View(await _context.DeNiroSalon.ToListAsync());
         }
-     
 
-        public IActionResult CustomerOrderConfirmation(string customerName, int tickets, int totalprice, Guid id)
+        public async Task<IActionResult> SelectSeatsPaccinoSalon(string name, int price, string time)
         {
-            ViewBag.customerName = customerName;
+   
+            ViewBag.movie = name.Trim().ToString();
+            ViewBag.price = price.ToString().Trim();
+            ViewBag.time = time.Trim().ToString();
+
+
+            return View(await _context.PaccinoSalon.ToListAsync());
+        }
+
+
+        public IActionResult CustomerOrderConfirmation(string fullname, int tickets, int totalprice, Guid id, string time, string salon, string seats)
+        {
+            ViewBag.fullname = fullname;
             ViewBag.tickets = tickets;
             ViewBag.id = id;
             ViewBag.totalprice = totalprice;
+            ViewBag.time = time;
+            ViewBag.salon = salon;
+            ViewBag.seats = seats;
+
 
 
             return View();
 
         }
 
-        public async Task<IActionResult> Checkout(string creditCard, string expiryDate, string cvc, string movie, string fullname, string email, int numberOfTickets, int totalPrice)
+        public async Task<IActionResult> Checkout(string creditCard, string expiryDate, string cvc, string movie, string fullname, string email, string numberOfTickets, string totalPrice,string time, string salon, string seats)
         {
             newOrder = new Orders
             {
@@ -199,28 +213,30 @@ namespace Cinema2_Labb3.Controllers
                 CreditCardNumber = creditCard,
                 ExpiryDate = expiryDate,
                 Cvc = cvc,
-                NumberOfSeats = numberOfTickets,
-                TotalPrice = totalPrice,
+                NumberOfSeats = Int32.Parse(numberOfTickets),
+                TotalPrice = Int32.Parse(totalPrice),
                 Movie = movie
             };
 
             _context.Orders.Add(newOrder);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("CustomerOrderConfirmation", "Orders", new { customerName = fullname, tickets = numberOfTickets, totalprice = totalPrice, id = newOrder.Id });
+            return RedirectToAction("CustomerOrderConfirmation", "Orders", new { fullname = fullname, tickets = numberOfTickets, totalprice = newOrder.TotalPrice, id = newOrder.Id, time = time, salon = salon, seats = seats });
 
         }
 
-        public IActionResult Payment(string movie, string fullname, string email, int price, int numberOfTicket, int totalPrice)
+        public IActionResult Payment(string fullname, string email, string entities, string NoOfTickets, string movie, string price, string time, string salon)
         {
-           
 
-            ViewBag.movie = movie;
             ViewBag.fullname = fullname;
             ViewBag.email = email;
+            ViewBag.seats = entities;
+            ViewBag.noTickets = NoOfTickets;
+            ViewBag.movie = movie;
             ViewBag.price = price;
-            ViewBag.numberOfTickets = numberOfTicket;
-            ViewBag.totalPrice = totalPrice;
+            ViewBag.time = time;
+            ViewBag.salon = salon;
+
 
             return View();
         }

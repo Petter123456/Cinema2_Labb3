@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Cinema_Labb3.Models.PaccinoSalon>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<script type="text/javascript">
+
+
+
+    var entitiesToUpdate = [];
+    var NoTickets = 0;
+
+
+    function Order() {
+            var entitiesToOneString = "";
+
+        for (var i = 0; i < entitiesToUpdate.length; i++) {
+            console.log(entitiesToUpdate[i] + "test");
+
+            entitiesToOneString = entitiesToOneString.concat(entitiesToUpdate[i] + ",");
+        } 
+
+        console.log(entitiesToOneString);
+
+        document.getElementById("entities").value = entitiesToOneString;
+        document.getElementById("NoOfTickets").value = NoTickets;
+        document.getElementById("price").value = NoTickets * @ViewBag.price;
+
+
+
+                @*var params = { data: entitiesToUpdate, tickets: NoTickets, movie: "@ViewBag.movie", price: "@ViewBag.price", time: "@ViewBag.time" };
+
+        $.ajax({
+            type: "GET",
+            url: "/PaccinoSalons/EditAvailible",
+            data: params,
+            dataType: "json",
+            traditional: true
+        });*@
+
+    };
+
+    function SaveSeat(seat) {
+
+        ToggleOccupied(seat);
+    }
+
+
+
+
+    function ToggleOccupied(seat) {
+
+        if (document.getElementById(seat).value !== true) {
+            document.getElementById(seat).style.background = "red";
+            document.getElementById(seat).value = true;
+
+            NoTickets = NoTickets + 1;
+            entitiesToUpdate.push(seat);
+
+        } else {
+            document.getElementById(seat).style.background = "grey";
+            document.getElementById(seat).value = false;
+
+            for (var i = 0; i < entitiesToUpdate.length; i++) {
+
+                if (entitiesToUpdate[i] == seat) {
+                    entitiesToUpdate.splice(i, 1);
+                }
+            }
+            NoTickets = NoTickets - 1;
+        }
+
+        Order();
+    }
+
+
+
+
+
+
+</script>
+
+
+
+<h1>Select seats in the Paccino-Salon</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Availible)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var item in Model)
+            {
+                <td id=@item.Id>
+                    <button id=@item.Id onclick="SaveSeat(@item.Id)">  @item.Availible.ToString().ToLower() </button>
+                </td>
+            }
+
+        </tr>
+    </tbody>
+</table>
+
+<form method="post" action="@Url.Action("EditAvailible", "PaccinoSalons")">
+    <input type="text" id="fullname" name="fullname" value="" required />
+    <input type="text" id="email" name="email" value="" required />
+    <input type="text" id="entities" name="entities" value="" readonly />
+    <input type="text" id="NoOfTickets" name="NoOfTickets" value="" readonly />
+    <input type="text" id="movie" name="movie" value="@ViewBag.movie" readonly />
+    <input type="text" id="price" name="price" value="" readonly />
+    <input type="text" id="time" name="time" value="@ViewBag.time" readonly />
+    <input type="text" id="salon" name="salon" value="Paccino-Salon" readonly />
+
+    <input type="submit" id="submit" onclick="Order()" value="Confirm" />
+
+</form>
+
+<button onclick="Order()"></button>

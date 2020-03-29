@@ -55,9 +55,26 @@
                 </td>
                 <td>
 
-                    <button>
+                    @{
+
+                        if (item.Salon.ToString().Equals("Paccino-Salon"))
+                        {
+                            <button>
+                                @Html.ActionLink("Köp", "SelectSeatsPaccinoSalon", "Orders", new { Name = item.Name, Price = item.Price, time = item.Time }, null)
+                            </button>
+                        }
+                        else
+                        {
+                            <button>
+                                @Html.ActionLink("Köp", "SelectSeatsDeNiroSalon", "Orders", new { Name = item.Name, Price = item.Price, time = item.Time }, null)
+                            </button>
+                        }
+                    }
+
+
+                    @*<button>
                         @Html.ActionLink("Köp", "ConfirmOrder", "Movies", new { Name = item.Name, Price = item.Price }, null)
-                    </button>
+                    </button>*@
                 </td>
             </tr>
         }

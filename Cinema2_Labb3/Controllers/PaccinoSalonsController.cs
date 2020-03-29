@@ -9,22 +9,22 @@ using Cinema_Labb3.Models;
 
 namespace Cinema2_Labb3.Controllers
 {
-    public class DeNiroSalonsController : Controller
+    public class PaccinoSalonsController : Controller
     {
         private readonly BerrasBiografContext _context;
 
-        public DeNiroSalonsController(BerrasBiografContext context)
+        public PaccinoSalonsController(BerrasBiografContext context)
         {
             _context = context;
         }
 
-        // GET: DeNiroSalons
+        // GET: PaccinoSalons
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DeNiroSalon.ToListAsync());
+            return View(await _context.PaccinoSalon.ToListAsync());
         }
 
-        // GET: DeNiroSalons/Details/5
+        // GET: PaccinoSalons/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,87 +32,66 @@ namespace Cinema2_Labb3.Controllers
                 return NotFound();
             }
 
-            var deNiroSalon = await _context.DeNiroSalon
+            var paccinoSalon = await _context.PaccinoSalon
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (deNiroSalon == null)
+            if (paccinoSalon == null)
             {
                 return NotFound();
             }
 
-            return View(deNiroSalon);
+            return View(paccinoSalon);
         }
 
-        // GET: DeNiroSalons/Create
+        // GET: PaccinoSalons/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: DeNiroSalons/Create
+        // POST: PaccinoSalons/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Availible")] DeNiroSalon deNiroSalon)
+        public async Task<IActionResult> Create([Bind("Id,Availible")] PaccinoSalon paccinoSalon)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(deNiroSalon);
+                _context.Add(paccinoSalon);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(deNiroSalon);
+            return View(paccinoSalon);
         }
 
-        // GET: DeNiroSalons/Edit/5
-        public async Task<IActionResult> EditAvailible(string[] data, int tickets, string movie, int price, string time)
+        // GET: PaccinoSalons/Edit/5
+        public async Task<IActionResult> EditAvailible(string fullname, string email, string entities, string NoOfTickets, string movie, string price, string time, string salon)
         {
+            List<string> numbers = new List<string>(entities.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 
-            int[] dataToInt = Array.ConvertAll(data, int.Parse);
-
-
-            foreach (var seat in dataToInt)
+            foreach (var entity in numbers)
             {
-                var deNiroSalon = await _context.DeNiroSalon.FindAsync(seat);
-                deNiroSalon.Availible = false;
-                _context.Update(deNiroSalon);
+                var parseToInt = Int32.Parse(entity);
+                var paccinoSalon = await _context.PaccinoSalon.FindAsync(parseToInt);
+                paccinoSalon.Availible = false;
+                _context.Update(paccinoSalon);
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction("ConfirmOrder", "DeNiroSalons", new { NoOftickets = tickets, seats = dataToInt, movie = movie, price = price, time = time });
+          return  RedirectToAction("Payment", "Orders", new {fullname = fullname, email = email, entities = entities, NoOfTickets = NoOfTickets, movie = movie, price = price, time = time, salon = salon });
 
         }
 
-        public IActionResult ConfirmOrder(int NoOftickets, int[] seats, string movie, int price, string time)
-        {
-            string confirmedSeats = "";
+   
 
-            foreach (var seat in seats)
-            {
-                seat.ToString();
-
-                confirmedSeats = confirmedSeats + seat;
-            }
-
-
-            ViewBag.tickets = NoOftickets;
-            ViewBag.seats = confirmedSeats;
-            ViewBag.movie = movie;
-            ViewBag.price = price;
-            ViewBag.time = time;
-
-
-            return View();
-        }
-
-        // POST: DeNiroSalons/Edit/5
+        // POST: PaccinoSalons/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Availible")] DeNiroSalon deNiroSalon)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Availible")] PaccinoSalon paccinoSalon)
         {
-            if (id != deNiroSalon.Id)
+            if (id != paccinoSalon.Id)
             {
                 return NotFound();
             }
@@ -121,12 +100,12 @@ namespace Cinema2_Labb3.Controllers
             {
                 try
                 {
-                    _context.Update(deNiroSalon);
+                    _context.Update(paccinoSalon);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DeNiroSalonExists(deNiroSalon.Id))
+                    if (!PaccinoSalonExists(paccinoSalon.Id))
                     {
                         return NotFound();
                     }
@@ -137,10 +116,10 @@ namespace Cinema2_Labb3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(deNiroSalon);
+            return View(paccinoSalon);
         }
 
-        // GET: DeNiroSalons/Delete/5
+        // GET: PaccinoSalons/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -148,30 +127,30 @@ namespace Cinema2_Labb3.Controllers
                 return NotFound();
             }
 
-            var deNiroSalon = await _context.DeNiroSalon
+            var paccinoSalon = await _context.PaccinoSalon
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (deNiroSalon == null)
+            if (paccinoSalon == null)
             {
                 return NotFound();
             }
 
-            return View(deNiroSalon);
+            return View(paccinoSalon);
         }
 
-        // POST: DeNiroSalons/Delete/5
+        // POST: PaccinoSalons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var deNiroSalon = await _context.DeNiroSalon.FindAsync(id);
-            _context.DeNiroSalon.Remove(deNiroSalon);
+            var paccinoSalon = await _context.PaccinoSalon.FindAsync(id);
+            _context.PaccinoSalon.Remove(paccinoSalon);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DeNiroSalonExists(int id)
+        private bool PaccinoSalonExists(int id)
         {
-            return _context.DeNiroSalon.Any(e => e.Id == id);
+            return _context.PaccinoSalon.Any(e => e.Id == id);
         }
     }
 }
