@@ -12,12 +12,25 @@
 @ViewBag.price
 @ViewBag.numberOfTickets
 @ViewBag.totalPrice
+@ViewBag.salon
 
 
 
+@{
+    var salon = "";
+
+    if (ViewBag.salon.Equals("Paccino-Salon"))
+    {
+        salon = "PaccinoSalons";
+    }
+    else if (ViewBag.salon.Equals("De-Niro-Salon"))
+    {
+        salon = "DeNiroSalons";
+    }
+}
 <h1>Payment</h1>
 
-<form method="post" action="@Url.Action("Checkout", "Orders")">
+<form method="post" action="@Url.Action("EditAvailible", salon)">
     <label>CreditCard</label>
     <input type="text" id="creditCard" name="creditCard" minlength="10" maxlength="10" required />
     <label>Expiry Date</label>
@@ -27,8 +40,9 @@
     <input name="movie" value=@ViewBag.movie readonly>
     <input name="fullname" value=@ViewBag.fullname readonly>
     <input name="email" value=@ViewBag.email readonly>
-    <input name="numberOfTickets" value=@ViewBag.noTickets readonly>
-    <input name="totalPrice" value=@ViewBag.price readonly>
+    <input name="entities" value=@ViewBag.entities readonly>
+    <input name="NoOfTickets" value=@ViewBag.noTickets readonly>
+    <input name="price" value=@ViewBag.price readonly>
     <input name="time" value=@ViewBag.time readonly>
     <input name="salon" value=@ViewBag.salon readonly>
     <input name="actualSeats" value=@ViewBag.actualSeats readonly>

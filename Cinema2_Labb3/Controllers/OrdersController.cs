@@ -162,25 +162,28 @@ namespace Cinema2_Labb3.Controllers
 
         }
 
-        public async Task<IActionResult> SelectSeatsDeNiroSalon(string name, int price, string time)
+        public async Task<IActionResult> SelectSeatsDeNiroSalon(string name, int price, string time, string salon)
         {
 
 
             ViewBag.movie = name.Trim().ToString();
             ViewBag.price = price.ToString().Trim();
             ViewBag.time = time.Trim().ToString();
+            ViewBag.salon = salon.Trim().ToString();
+
 
 
 
             return View(await _context.DeNiroSalon.ToListAsync());
         }
 
-        public async Task<IActionResult> SelectSeatsPaccinoSalon(string name, int price, string time)
+        public async Task<IActionResult> SelectSeatsPaccinoSalon(string name, int price, string time, string salon)
         {
    
             ViewBag.movie = name.Trim().ToString();
             ViewBag.price = price.ToString().Trim();
             ViewBag.time = time.Trim().ToString();
+            ViewBag.salon = salon.Trim().ToString();
 
 
             return View(await _context.PaccinoSalon.ToListAsync());
@@ -227,6 +230,13 @@ namespace Cinema2_Labb3.Controllers
 
         public IActionResult Payment(string fullname, string email, string entities, string NoOfTickets, string movie, string price, string time, string salon, string actualSeats)
         {
+            List<string> numbers = new List<string>(entities.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+
+            if (numbers.Count() > 12)
+            {
+                throw new ArgumentNullException();
+            }
 
             ViewBag.fullname = fullname;
             ViewBag.email = email;

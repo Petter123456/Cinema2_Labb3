@@ -54,6 +54,13 @@
 
     function SaveSeat(entities, seats) {
         ToggleOccupied(entities, seats);
+             if (NoTickets > 12) {
+            document.getElementById("submit").disabled = true; 
+            alert("You can only reserve a maximum of 12 tickets, please unselect seats so that the total number of tickets is less than 12");
+        }
+        if (NoTickets < 13) {
+            document.getElementById("submit").disabled = false; 
+        }
     }
 
 
@@ -111,6 +118,7 @@
             <th></th>
         </tr>
     </thead>
+
     <tbody>
         <tr>
             @{var seat = 0;}
@@ -122,25 +130,52 @@
                     seat = 0;
                 }
 
-                if(ViewBag.time.Equals("16.00") && item.Id < 101)
+                if(ViewBag.time.Equals("16.00") && item.Id < 51)
                 {
                     seat++;
                     <td id=@seat>
-                        <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
+                        @if (item.Availible == false)
+                        {
+                            <button id=@item.Id disabled>  @item.Availible.ToString().ToLower() </button>
+
+                        }
+                        else
+                        {
+                            <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
+
+                        }
                     </td>
                 }
-                else if (ViewBag.time.Equals("19.00") && item.Id > 100 && item.Id < 201)
+                else if (ViewBag.time.Equals("19.00") && item.Id > 50 && item.Id < 101)
                 {
                     seat++;
                     <td id=@item.Id>
-                        <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
+                        @if (item.Availible == false)
+                        {
+                            <button id=@item.Id disabled>  @item.Availible.ToString().ToLower() </button>
+
+                        }
+                        else
+                        {
+                            <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
+
+                        }
                     </td>
                 }
-                else if (ViewBag.time.Equals("21.30") && item.Id > 200)
+                else if (ViewBag.time.Equals("21.30") && item.Id > 100)
                 {
                     seat++;
                     <td id=@item.Id>
-                        <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
+                        @if (item.Availible == false)
+                        {
+                            <button id=@item.Id disabled>  @item.Availible.ToString().ToLower() </button>
+
+                        }
+                        else
+                        {
+                            <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
+
+                        }
                     </td>
                 }
             }

@@ -15,45 +15,36 @@
     var NoTickets = 0;
 
 
+
     function Order() {
         var entitiesToOneString = "";
         var actualSeatsToOneString = "";
 
 
         for (var i = 0; i < entitiesToUpdate.length; i++) {
-           // console.log(entitiesToUpdate[i] + "test");
-
             entitiesToOneString = entitiesToOneString.concat(entitiesToUpdate[i] + ",");
         }
         for (var i = 0; i < actualSeats.length; i++) {
-           // console.log(entitiesToUpdate[i] + "test");
-
             actualSeatsToOneString = actualSeatsToOneString.concat(actualSeats[i] + ",");
         }
 
-        //console.log(entitiesToOneString);
-
-
         document.getElementById("entities").value = entitiesToOneString;
-        document.getElementById("NoOfTickets").value = NoTickets;
         document.getElementById("price").value = NoTickets * @ViewBag.price;
         document.getElementById("actualSeats").value = actualSeatsToOneString;
-
-
-                @*var params = { data: entitiesToUpdate, tickets: NoTickets, movie: "@ViewBag.movie", price: "@ViewBag.price", time: "@ViewBag.time" };
-
-        $.ajax({
-            type: "GET",
-            url: "/PaccinoSalons/EditAvailible",
-            data: params,
-            dataType: "json",
-            traditional: true
-        });*@
 
     };
 
     function SaveSeat(entities, seats) {
+
         ToggleOccupied(entities, seats);
+
+        if (NoTickets > 12) {
+            document.getElementById("submit").disabled = true;
+            alert("You can only reserve a maximum of 12 tickets, please unselect seats so that the total number of tickets is less than 12");
+        }
+        if (NoTickets < 13) {
+            document.getElementById("submit").disabled = false;
+        }
     }
 
 
@@ -88,6 +79,10 @@
             }
             NoTickets = NoTickets - 1;
         }
+
+        var NoTicketsToString = NoTickets.toString();
+        document.getElementById("NoOfTickets").value = NoTicketsToString;
+
 
         Order();
     }
@@ -127,30 +122,58 @@
                 {
                     seat++;
                     <td id=@seat>
-                        <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
+                        @if (item.Availible == false)
+                        {
+                            <button id=@item.Id disabled>  @item.Availible.ToString().ToLower() </button>
+
+                        }
+                        else
+                        {
+                            <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
+
+                        }
                     </td>
                 }
                 else if (ViewBag.time.Equals("19.00") && item.Id > 100 && item.Id < 201)
                 {
                     seat++;
                     <td id=@item.Id>
-                        <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
+
+                        @if (item.Availible == false)
+                        {
+                            <button id=@item.Id disabled>  @item.Availible.ToString().ToLower() </button>
+
+                        }
+                        else
+                        {
+                            <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
+
+                        }
                     </td>
                 }
                 else if (ViewBag.time.Equals("21.30") && item.Id > 200)
                 {
                     seat++;
                     <td id=@item.Id>
-                        <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
+                        @if (item.Availible == false)
+                        {
+                            <button id=@item.Id disabled>  @item.Availible.ToString().ToLower() </button>
+
+                        }
+                        else
+                        {
+                            <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
+
+                        }
                     </td>
                 }
             }
 
         </tr>
     </tbody>
-</table>
+</table>NoOfTickets
 
-<form method="post" action="@Url.Action("EditAvailible", "DeNiroSalons")">
+<form method="post" action="@Url.Action("Payment", "Orders")">
     <input type="text" id="fullname" name="fullname" value="" required />
     <input type="text" id="email" name="email" value="" required />
     <input type="hidden" id="entities" name="entities" value="" readonly />
@@ -158,7 +181,7 @@
     <input type="text" id="movie" name="movie" value="@ViewBag.movie" readonly />
     <input type="text" id="price" name="price" value="" readonly />
     <input type="text" id="time" name="time" value="@ViewBag.time" readonly />
-    <input type="text" id="salon" name="salon" value="Paccino-Salon" readonly />
+    <input type="text" id="salon" name="salon" value="@ViewBag.salon" readonly />
     <input type="text" id="actualSeats" name="actualSeats" value="" readonly />
 
 

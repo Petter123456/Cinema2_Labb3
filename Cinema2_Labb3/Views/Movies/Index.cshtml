@@ -187,13 +187,13 @@
                         if (item.Salon.ToString().Equals("Paccino-Salon"))
                         {
                             <button>
-                                @Html.ActionLink("Köp", "SelectSeatsPaccinoSalon", "Orders", new { Name = item.Name, Price = item.Price, time = item.Time }, null)
+                                @Html.ActionLink("Köp", "SelectSeatsPaccinoSalon", "Orders", new { Name = item.Name, Price = item.Price, time = item.Time, salon = item.Salon }, null)
                             </button>
                         }
                         else
                         {
                             <button>
-                                @Html.ActionLink("Köp", "SelectSeatsDeNiroSalon", "Orders", new { Name = item.Name, Price = item.Price, time = item.Time }, null)
+                                @Html.ActionLink("Köp", "SelectSeatsDeNiroSalon", "Orders", new { Name = item.Name, Price = item.Price, time = item.Time, salon = item.Salon }, null)
                             </button>
                         }
                     }
