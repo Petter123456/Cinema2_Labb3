@@ -1,30 +1,126 @@
 ﻿@model IEnumerable<Cinema_Labb3.Models.Movies>
 
+
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script type="text/javascript">
+
+    function sortTable() {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("moviesTable");
+        switching = true;
+        /*Make a loop that will continue until
+        no switching has been done:*/
+        while (switching) {
+            //start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /*Loop through all table rows (except the
+            first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+                //start by saying there should be no switching:
+                shouldSwitch = false;
+                /*Get the two elements you want to compare,
+                one from current row and one from the next:*/
+                x = rows[i].getElementsByTagName("TD")[5];
+                y = rows[i + 1].getElementsByTagName("TD")[5];
+                console.log(x.innerHTML.toLowerCase());
+                console.log(y.innerHTML.toLowerCase());
+                //check if the two rows should switch place:
+                if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
+                    //if so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                /*If a switch has been marked, make the switch
+                and mark that a switch has been done:*/
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+    function sortTable2() {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("moviesTable");
+        switching = true;
+        /*Make a loop that will continue until
+        no switching has been done:*/
+        while (switching) {
+            //start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /*Loop through all table rows (except the
+            first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+                //start by saying there should be no switching:
+                shouldSwitch = false;
+                /*Get the two elements you want to compare,
+                one from current row and one from the next:*/
+                x = rows[i].getElementsByTagName("TD")[3];
+                y = rows[i + 1].getElementsByTagName("TD")[3];
+                console.log(x.innerHTML.toLowerCase());
+                console.log(y.innerHTML.toLowerCase());
+                //check if the two rows should switch place:
+                if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
+                    //if so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                /*If a switch has been marked, make the switch
+                and mark that a switch has been done:*/
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+</script>
+
+
 
 <h1>Dagens Filmer</h1>
+<p><button onclick="sortTable()">Sort</button></p>
+<p><button onclick="sortTable2()">Sort</button></p>
 
-<table class="table">
+
+<table class="table" id="moviesTable">
     <thead>
         <tr>
             <th>
 
             </th>
             <th>
-                Movie
+                Film
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
-                Time
+                Tid
             </th>
             <th>
                 Salon
+            </th>
+            <th>
+                Platser kvar
             </th>
         </tr>
     </thead>
@@ -44,7 +140,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
-                <td>
+                <td id="price">
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
@@ -52,6 +148,37 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Salon)
+                </td>
+                <td>
+
+                    @{
+
+                        if (item.Salon.Equals("Paccino-Salon") && item.Time.Equals("16.00"))
+                        {
+                            @ViewBag.firstViewingPaccinoSalon
+                        }
+                        else if (item.Salon.Equals("Paccino-Salon") && item.Time.Equals("19.00"))
+                        {
+                            @ViewBag.secondViewingPaccinoSalon
+                        }
+                        else if (item.Salon.Equals("Paccino-Salon") && item.Time.Equals("21.30"))
+                        {
+                            @ViewBag.thirdViewingPaccinoSalon
+                        }
+                        else if (item.Salon.Equals("De-Niro-Salon") && item.Time.Equals("16.00"))
+                        {
+                            @ViewBag.firstViewingDeNiroSalon
+                        }
+                        else if (item.Salon.Equals("De-Niro-Salon") && item.Time.Equals("19.00"))
+                        {
+                            @ViewBag.secondViewingDeNiroSalon
+                        }
+                        else if (item.Salon.Equals("De-Niro-Salon") && item.Time.Equals("21.30"))
+                        {
+                            @ViewBag.thirdViewingDeNiroSalon
+                        }
+                    }
+
                 </td>
                 <td>
 
@@ -70,13 +197,11 @@
                             </button>
                         }
                     }
-
-
-                    @*<button>
-                        @Html.ActionLink("Köp", "ConfirmOrder", "Movies", new { Name = item.Name, Price = item.Price }, null)
-                    </button>*@
                 </td>
+
             </tr>
         }
     </tbody>
 </table>
+
+

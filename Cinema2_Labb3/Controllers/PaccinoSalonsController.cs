@@ -152,5 +152,7 @@ namespace Cinema2_Labb3.Controllers
         {
             return _context.PaccinoSalon.Any(e => e.Id == id);
         }
+
+
     }
 }
