@@ -74,9 +74,9 @@ namespace Cinema2_Labb3.Controllers
             foreach (var entity in numbers)
             {
                 var parseToInt = Int32.Parse(entity);
-                var DeNiroSalon = await _context.DeNiroSalon.FindAsync(parseToInt);
-                DeNiroSalon.Availible = false;
-                _context.Update(DeNiroSalon);
+                var PaccinoSalon = await _context.PaccinoSalon.FindAsync(parseToInt);
+                PaccinoSalon.Availible = false;
+                _context.Update(PaccinoSalon);
                 await _context.SaveChangesAsync();
             }
 

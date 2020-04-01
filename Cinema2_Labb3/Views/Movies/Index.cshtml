@@ -96,10 +96,7 @@
 
 
 
-<h1>Dagens Filmer</h1>
-<p><button onclick="sortTable()">Sort</button></p>
-<p><button onclick="sortTable2()">Sort</button></p>
-
+<h1>Todays Films</h1>
 
 <table class="table" id="moviesTable">
     <thead>
@@ -108,19 +105,21 @@
 
             </th>
             <th>
-                Film
+                <a>Film</a>
+
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                <a>Price</a>
             </th>
             <th>
-                Tid
+                <a onclick="sortTable2()">Time</a>
             </th>
             <th>
-                Salon
+                <a>Salon</a>
+
             </th>
             <th>
-                Platser kvar
+                <a onclick="sortTable()">Availible Seats</a>
             </th>
         </tr>
     </thead>
@@ -186,13 +185,13 @@
 
                         if (item.Salon.ToString().Equals("Paccino-Salon"))
                         {
-                            <button>
+                            <button class="btn btn-primary">
                                 @Html.ActionLink("Köp", "SelectSeatsPaccinoSalon", "Orders", new { Name = item.Name, Price = item.Price, time = item.Time, salon = item.Salon }, null)
                             </button>
                         }
                         else
                         {
-                            <button>
+                            <button class="btn btn-primary">
                                 @Html.ActionLink("Köp", "SelectSeatsDeNiroSalon", "Orders", new { Name = item.Name, Price = item.Price, time = item.Time, salon = item.Salon }, null)
                             </button>
                         }

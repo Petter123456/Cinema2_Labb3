@@ -4,57 +4,45 @@
     ViewData["Title"] = "Index";
 }
 
-  
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - Cinema2_Labb3</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/PaccinoAndDeNiroSalons.css" />
+
+    </head>
 <script type="text/javascript">
-
-
 
     var entitiesToUpdate = [];
     var actualSeats = [];
-
     var NoTickets = 0;
+
+    
 
 
     function Order() {
         var entitiesToOneString = "";
         var actualSeatsToOneString = "";
 
-
         for (var i = 0; i < entitiesToUpdate.length; i++) {
-           // console.log(entitiesToUpdate[i] + "test");
-
             entitiesToOneString = entitiesToOneString.concat(entitiesToUpdate[i] + ",");
         }
         for (var i = 0; i < actualSeats.length; i++) {
-           // console.log(entitiesToUpdate[i] + "test");
-
             actualSeatsToOneString = actualSeatsToOneString.concat(actualSeats[i] + ",");
         } 
-
-        //console.log(entitiesToOneString);
-
 
         document.getElementById("entities").value = entitiesToOneString;
         document.getElementById("NoOfTickets").value = NoTickets;
         document.getElementById("price").value = NoTickets * @ViewBag.price;
         document.getElementById("actualSeats").value = actualSeatsToOneString;
-
-
-                @*var params = { data: entitiesToUpdate, tickets: NoTickets, movie: "@ViewBag.movie", price: "@ViewBag.price", time: "@ViewBag.time" };
-
-        $.ajax({
-            type: "GET",
-            url: "/PaccinoSalons/EditAvailible",
-            data: params,
-            dataType: "json",
-            traditional: true
-        });*@
-
     };
 
     function SaveSeat(entities, seats) {
+        
         ToggleOccupied(entities, seats);
-             if (NoTickets > 12) {
+
+        if (NoTickets > 12) {
             document.getElementById("submit").disabled = true; 
             alert("You can only reserve a maximum of 12 tickets, please unselect seats so that the total number of tickets is less than 12");
         }
@@ -68,22 +56,34 @@
 
     function ToggleOccupied(entities, seats) {
 
-        if (document.getElementById(entities).value !== true) {
-            document.getElementById(entities).style.background = "red";
-            document.getElementById(entities).value = true;
+        console.log(document.getElementById(entities).value);
+
+                console.log( typeof document.getElementById(entities).value);
+
+
+        if (document.getElementById(entities).value == "true" ) {
+            document.getElementById(entities).style.backgroundColor = "darkblue";
+            document.getElementById(entities).style.color = "darkblue";
+
+            document.getElementById(entities).value = "false";
 
             NoTickets = NoTickets + 1;
             entitiesToUpdate.push(entities);
             actualSeats.push(String(seats));
 
+            console.log(entities);
+            console.log(document.getElementById(entities).value);
+
 
         } else {
-            document.getElementById(entities).style.background = "grey";
-            document.getElementById(entities).value = false;
+            document.getElementById(entities).style.backgroundColor = "darkred";
+           document.getElementById(entities).style.color = "darkred";
+
+            document.getElementById(entities).value = "true";
 
             for (var i = 0; i < entitiesToUpdate.length; i++) {
-
                 if (entitiesToUpdate[i] == entities) {
+                   
                     entitiesToUpdate.splice(i, 1);
                 }
             }
@@ -98,111 +98,129 @@
 
         Order();
     }
-
-
-
-
-
-
 </script>
 
 
+<div class="d-flex flex-nowrap">
+    <div class="order-1 p-2" id="divOneTableSelectSeat">
+        <table id="PaccinoTable">
+            <thead>
+                <tr>
+                    <th>
+                        <h3 class="screen">Welcome to the Paccino-Salon</h3>
+                        <p>Please select your seats below</p>
+                        <div class="cinemaScreen">Cinema Screen</div>
+                    </th>
+                </tr>
+            </thead>
 
-<h1>Select seats in the Paccino-Salon</h1>
+            <tbody>
+                <tr>
+                    @{var seat = 0;}
 
-<div id="table_div">
-
-
-
-    <table class="table" id="tabbbbb">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Availible)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr>
-                @{var seat = 0;}
-
-                @foreach (var item in Model)
-                {
-                    if (seat == 51)
+                    @foreach (var item in Model)
                     {
-                        seat = 0;
+                        if (seat == 51)
+                        {
+                            seat = 0;
+                        }
+
+                        if (ViewBag.time.Equals("16.00") && item.Id < 51)
+                        {
+                            seat++;
+                            <td>
+                                @if (item.Availible == false)
+                                {
+                                <button class="disabledSeat" id=@item.Id disabled>  </button>
+                                
+                                }
+                                else
+                                {
+                                    <button class="selectSeatButton" id=@item.Id onclick="SaveSeat(@item.Id, @seat)" value=true>   </button>
+
+                                }
+                            </td>
+                        }
+                        else if (ViewBag.time.Equals("19.00") && item.Id > 50 && item.Id < 101)
+                        {
+                            seat++;
+                <td>
+                    @if (item.Availible == false)
+                    {
+                        <button class="disabledSeat" id=@item.Id disabled>  </button>
+
+                    }
+                    else
+                    {
+                        <button class="selectSeatButton" id=@item.Id onclick="SaveSeat(@item.Id, @seat)" value=true>   </button>
+
+                    }
+                </td>
+                        }
+                        else if (ViewBag.time.Equals("21.30") && item.Id > 100)
+                        {
+                            seat++;
+                <td>
+                    @if (item.Availible == false)
+                    {
+                        <button class="disabledSeat" id=@item.Id disabled>  </button>
+
+                    }
+                    else
+                    {
+                        <button class="selectSeatButton" id=@item.Id onclick="SaveSeat(@item.Id, @seat)" value=true>   </button>
+
+                    }
+                </td>
+                        }
                     }
 
-                    if (ViewBag.time.Equals("16.00") && item.Id < 51)
-                    {
-                        seat++;
-                        <td id=@seat>
-                            @if (item.Availible == false)
-                            {
-                                <button id=@item.Id disabled>  @item.Availible.ToString().ToLower() </button>
+                </tr>
+            </tbody>
+        </table>
 
-                            }
-                            else
-                            {
-                                <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
 
-                            }
-                        </td>
-                    }
-                    else if (ViewBag.time.Equals("19.00") && item.Id > 50 && item.Id < 101)
-                    {
-                        seat++;
-                        <td id=@item.Id>
-                            @if (item.Availible == false)
-                            {
-                                <button id=@item.Id disabled>  @item.Availible.ToString().ToLower() </button>
+    </div>
 
-                            }
-                            else
-                            {
-                                <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
 
-                            }
-                        </td>
-                    }
-                    else if (ViewBag.time.Equals("21.30") && item.Id > 100)
-                    {
-                        seat++;
-                        <td id=@item.Id>
-                            @if (item.Availible == false)
-                            {
-                                <button id=@item.Id disabled>  @item.Availible.ToString().ToLower() </button>
+    <div class="order-2 p-2" id="divTwoFormSendtoSalon">
+        <form method="post" action="@Url.Action("Payment", "Orders")">
+            <label>Full Name</label>
+            <div class="form-group">
+                <input type="text" id="fullname" name="fullname" value="" required />
+            </div>
+            <label>Email</label>
+            <div class="form-group">
+                <input type="text" id="email" name="email" value="" required />
+            </div>
+            <input type="hidden" id="entities" name="entities" value="" readonly />
+            <input type="hidden" id="NoOfTickets" name="NoOfTickets" value="" readonly />
+            <label>Movie</label>
+            <div class="form-group">
+                <input type="text" id="movie" name="movie" value="@ViewBag.movie" readonly />
+            </div>
+            <label>Price</label>
+            <div class="form-group">
+                <input type="text" id="price" name="price" value="" readonly />
+            </div>
+            <label>Time</label>
+            <div class="form-group">
+                <input type="text" id="time" name="time" value="@ViewBag.time" readonly />
+            </div>
+            <input type="hidden" id="salon" name="salon" value="Paccino-Salon" readonly />
+            <label>Seats</label>
+            <div class="form-group">
+                <input type="text" id="actualSeats" name="actualSeats" value="" readonly />
+            </div>
+            <input type="submit" class="btn btn-primary" id="submit" onclick="Order()" value="Reserve" />
 
-                            }
-                            else
-                            {
-                                <button id=@item.Id onclick="SaveSeat(@item.Id, @seat)">  @item.Availible.ToString().ToLower() </button>
+        </form>
 
-                            }
-                        </td>
-                    }
-                }
-
-            </tr>
-        </tbody>
-    </table>
+    </div>
 </div>
-<form method="post" action="@Url.Action("EditAvailible", "PaccinoSalons")">
-    <input type="text" id="fullname" name="fullname" value="" required />
-    <input type="text" id="email" name="email" value="" required />
-    <input type="hidden" id="entities" name="entities" value="" readonly />
-    <input type="text" id="NoOfTickets" name="NoOfTickets" value="" readonly />
-    <input type="text" id="movie" name="movie" value="@ViewBag.movie" readonly />
-    <input type="text" id="price" name="price" value="" readonly />
-    <input type="text" id="time" name="time" value="@ViewBag.time" readonly />
-    <input type="text" id="salon" name="salon" value="Paccino-Salon" readonly />
-    <input type="text" id="actualSeats" name="actualSeats" value="" readonly />
 
 
-    <input type="submit" id="submit" onclick="Order()" value="Confirm" />
 
-</form>
 
-<button onclick="Order()"></button>
+
+

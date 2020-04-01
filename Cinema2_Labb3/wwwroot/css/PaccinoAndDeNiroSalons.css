@@ -1,0 +1,103 @@
+﻿#PaccinoTable td {
+    display: inline;
+}
+
+#PaccinoTable td:nth-child(10):after {
+    content: "\A";
+    white-space: pre;
+}
+#PaccinoTable td:nth-child(20):after {
+    content: "\A";
+    white-space: pre;
+}
+#PaccinoTable td:nth-child(30):after {
+    content: "\A";
+    white-space: pre;
+}
+#PaccinoTable td:nth-child(40):after {
+    content: "\A";
+    white-space: pre;
+}
+#PaccinoTable td:nth-child(50):after {
+    content: "\A";
+    white-space: pre;
+}
+#PaccinoTable td:nth-child(60):after {
+    content: "\A";
+    white-space: pre;
+}
+#PaccinoTable td:nth-child(70):after {
+    content: "\A";
+    white-space: pre;
+}
+#PaccinoTable td:nth-child(80):after {
+    content: "\A";
+    white-space: pre;
+}
+#PaccinoTable td:nth-child(90):after {
+    content: "\A";
+    white-space: pre;
+}
+
+
+
+
+}
+
+
+
+
+
+
+#divTwoFormSendtoSalon {
+    margin-left: 10%;
+}
+
+
+#divOneTableSelectSeat {
+    align-items: center;
+    text-align: center;
+}
+
+
+.screen {
+    color: #bfa308;
+}
+
+.selectSeatButton {
+    color: darkred;
+    background-color: darkred;
+    border: none;
+    width: 10px; 
+    height: 10px; 
+}
+
+.cinemaScreen {
+    border: none;
+    height: auto;
+    color: #bfa308;
+    background-color: #333;
+}
+
+.btn-primary {
+    color: #bfa308;
+    background-color: darkred;
+    border-color: darkred;
+    margin-top: 3%;
+}
+
+label {
+    color: #bfa308;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.disabledSeat {
+    color: black;
+    background-color: black;
+    border: none;
+    width: 10px;
+    height: 10px;
+}
