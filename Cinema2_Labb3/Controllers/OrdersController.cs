@@ -19,136 +19,6 @@ namespace Cinema2_Labb3.Controllers
             _context = context;
         }
 
-        // GET: Orders
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Orders.ToListAsync());
-        }
-
-        // GET: Orders/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var orders = await _context.Orders
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (orders == null)
-            {
-                return NotFound();
-            }
-
-            return View(orders);
-        }
-
-        // GET: Orders/Create
-        public IActionResult Create(string name, int price)
-        {
-            ViewBag.name = name;
-            ViewBag.price = price;
-
-            return View();
-        }
-
-        // POST: Orders/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,CreditCardNumber,ExpiryDate,Cvc,NumberOfSeats,TotalPrice,Movie")] Orders orders)
-        {
-            if (ModelState.IsValid)
-            {
-                orders.Id = Guid.NewGuid();
-                _context.Add(orders);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(orders);
-        }
-
-        // GET: Orders/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var orders = await _context.Orders.FindAsync(id);
-            if (orders == null)
-            {
-                return NotFound();
-            }
-            return View(orders);
-        }
-
-        // POST: Orders/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Email,CreditCardNumber,ExpiryDate,Cvc,NumberOfSeats,TotalPrice,Movie")] Orders orders)
-        {
-            if (id != orders.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(orders);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!OrdersExists(orders.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(orders);
-        }
-
-        // GET: Orders/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var orders = await _context.Orders
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (orders == null)
-            {
-                return NotFound();
-            }
-
-            return View(orders);
-        }
-
-        // POST: Orders/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var orders = await _context.Orders.FindAsync(id);
-            _context.Orders.Remove(orders);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         private bool OrdersExists(Guid id)
         {
             return _context.Orders.Any(e => e.Id == id);
@@ -159,20 +29,15 @@ namespace Cinema2_Labb3.Controllers
             var totalPrice = numberOfTicket * price;
 
             return RedirectToAction("Payment", "Orders", new { movie = movie, fullname = fullname, email = email, price = price, numberOfTicket = numberOfTicket, totalPrice = totalPrice });
-
         }
 
         public async Task<IActionResult> SelectSeatsDeNiroSalon(string name, int price, string time, string salon)
         {
 
-
             ViewBag.movie = name.Trim().ToString();
             ViewBag.price = price.ToString().Trim();
             ViewBag.time = time.Trim().ToString();
             ViewBag.salon = salon.Trim().ToString();
-
-
-
 
             return View(await _context.DeNiroSalon.ToListAsync());
         }
@@ -184,7 +49,6 @@ namespace Cinema2_Labb3.Controllers
             ViewBag.price = price.ToString().Trim();
             ViewBag.time = time.Trim().ToString();
             ViewBag.salon = salon.Trim().ToString();
-
 
             return View(await _context.PaccinoSalon.ToListAsync());
         }
@@ -200,10 +64,7 @@ namespace Cinema2_Labb3.Controllers
             ViewBag.salon = salon;
             ViewBag.actualSeats = actualSeats;
 
-
-
             return View();
-
         }
 
         public async Task<IActionResult> Checkout(string creditCard, string expiryDate, string cvc, string movie, string fullname, string email, string numberOfTickets, string totalPrice,string time, string salon, string actualSeats)

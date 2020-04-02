@@ -10,7 +10,6 @@
         <title>@ViewData["Title"] - Cinema2_Labb3</title>
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/PaccinoAndDeNiroSalons.css" />
-
     </head>
 <script type="text/javascript">
 
@@ -18,10 +17,7 @@
     var actualSeats = [];
     var NoTickets = 0;
 
-    
-
-
-    function Order() {
+    function OrderValues() {
         var entitiesToOneString = "";
         var actualSeatsToOneString = "";
 
@@ -51,15 +47,7 @@
         }
     }
 
-
-
-
     function ToggleOccupied(entities, seats) {
-
-        console.log(document.getElementById(entities).value);
-
-                console.log( typeof document.getElementById(entities).value);
-
 
         if (document.getElementById(entities).value == "true" ) {
             document.getElementById(entities).style.backgroundColor = "darkblue";
@@ -71,13 +59,9 @@
             entitiesToUpdate.push(entities);
             actualSeats.push(String(seats));
 
-            console.log(entities);
-            console.log(document.getElementById(entities).value);
-
-
         } else {
             document.getElementById(entities).style.backgroundColor = "darkred";
-           document.getElementById(entities).style.color = "darkred";
+            document.getElementById(entities).style.color = "darkred";
 
             document.getElementById(entities).value = "true";
 
@@ -96,7 +80,7 @@
             NoTickets = NoTickets - 1;
         }
 
-        Order();
+        OrderValues();
     }
 </script>
 
@@ -144,44 +128,41 @@
                         else if (ViewBag.time.Equals("19.00") && item.Id > 50 && item.Id < 101)
                         {
                             seat++;
-                <td>
-                    @if (item.Availible == false)
-                    {
-                        <button class="disabledSeat" id=@item.Id disabled>  </button>
+                     <td>
+                        @if (item.Availible == false)
+                        {
+                            <button class="disabledSeat" id=@item.Id disabled>  </button>
 
-                    }
-                    else
-                    {
-                        <button class="selectSeatButton" id=@item.Id onclick="SaveSeat(@item.Id, @seat)" value=true>   </button>
+                        }
+                        else
+                        {
+                            <button class="selectSeatButton" id=@item.Id onclick="SaveSeat(@item.Id, @seat)" value=true>   </button>
 
-                    }
-                </td>
+                        }
+                     </td>
                         }
                         else if (ViewBag.time.Equals("21.30") && item.Id > 100)
                         {
                             seat++;
-                <td>
-                    @if (item.Availible == false)
-                    {
-                        <button class="disabledSeat" id=@item.Id disabled>  </button>
+                     <td>
+                        @if (item.Availible == false)
+                        {
+                            <button class="disabledSeat" id=@item.Id disabled>  </button>
 
-                    }
-                    else
-                    {
-                        <button class="selectSeatButton" id=@item.Id onclick="SaveSeat(@item.Id, @seat)" value=true>   </button>
+                        }
+                        else
+                        {
+                            <button class="selectSeatButton" id=@item.Id onclick="SaveSeat(@item.Id, @seat)" value=true>   </button>
 
-                    }
-                </td>
+                        }
+                     </td>
                         }
                     }
 
                 </tr>
             </tbody>
         </table>
-
-
     </div>
-
 
     <div class="order-2 p-2" id="divTwoFormSendtoSalon">
         <form method="post" action="@Url.Action("Payment", "Orders")">

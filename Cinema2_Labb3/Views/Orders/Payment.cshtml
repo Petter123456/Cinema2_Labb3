@@ -25,39 +25,10 @@
 }
 <h1>Payment</h1>
 
-@*<form method="post" action="@Url.Action("EditAvailible", salon)">
-        <label>CreditCard</label>
-        <input type="text" id="creditCard" name="creditCard" minlength="10" maxlength="10" required />
-        <label>Expiry Date</label>
-        <input type="text" id="expiryDate" name="expiryDate" minlenght="4" maxlength="4" required />
-        <label>CVC Submit</label>
-        <input type="text" id="cvc" name="cvc" required maxlength="3" minlength="3" />
-        <input name="movie" value=@ViewBag.movie readonly>
-        <input name="fullname" value=@ViewBag.fullname readonly>
-        <input name="email" value=@ViewBag.email readonly>
-        <input name="entities" value=@ViewBag.entities readonly>
-        <input name="NoOfTickets" value=@ViewBag.noTickets readonly>
-        <input name="price" value=@ViewBag.price readonly>
-        <input name="time" value=@ViewBag.time readonly>
-        <input name="salon" value=@ViewBag.salon readonly>
-        <input name="actualSeats" value=@ViewBag.actualSeats readonly>
-
-        <input type="submit" />
-    </form>*@
-
-
-<div class="d-flex flex-nowrap">
-    @*div class="order-1 p-2" id="divOneTableSelectSeat">
-
-    </div>*@
-
-
-
+<div class="d-flex flex-nowrap">  
     <div class="order-2 p-2" id="divFormPayment">
-
         <form method="post" action="@Url.Action("EditAvailible", salon)">
             <div class="order-1 p-2" id="divOneFormPayment">
-
                 <label>CreditCard</label>
                 <div class="form-group">
                     <input type="text" id="creditCard" name="creditCard" minlength="10" maxlength="10" required />
@@ -108,9 +79,6 @@
                     <input name="actualSeats" value=@ViewBag.actualSeats readonly>
                 </div>
             </div>
-
         </form>
-
     </div>
-
-    </div>
+</div>

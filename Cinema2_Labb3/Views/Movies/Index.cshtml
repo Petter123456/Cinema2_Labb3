@@ -9,92 +9,84 @@
 
 <script type="text/javascript">
 
-    function sortTable() {
+    window.onload = function () {
+
+        if (@ViewBag.firstViewingPaccinoSalon === 0) {
+            document.getElementById("availibleSeatsFirstViewing").style.color = "red";
+        }
+        if (@ViewBag.secondViewingPaccinoSalon === 0) {
+            document.getElementById("availibleSeatsSecondViewing").style.color = "red";
+        }
+        if (@ViewBag.thirdViewingPaccinoSalon === 0) {
+            document.getElementById("availibleSeatsThirdViewing").style.color = "red";
+        }
+        if (@ViewBag.firstViewingDeNiroSalon === 0) {
+            document.getElementById("availibleSeatsFirstViewingDeNiro").style.color = "red";
+        }
+        if (@ViewBag.secondViewingDeNiroSalon === 0) {
+            document.getElementById("availibleSeatsSecondViewingDeNiro").style.color = "red";
+        }
+        if (@ViewBag.thirdViewingDeNiroSalon === 0) {
+            document.getElementById("availibleSeatsThirdViewingDeNiro").style.color = "red";
+        }
+  }
+       
+    function sortAvailibleSeats() {
         var table, rows, switching, i, x, y, shouldSwitch;
         table = document.getElementById("moviesTable");
         switching = true;
-        /*Make a loop that will continue until
-        no switching has been done:*/
+
         while (switching) {
-            //start by saying: no switching is done:
             switching = false;
             rows = table.rows;
-            /*Loop through all table rows (except the
-            first, which contains table headers):*/
+
             for (i = 1; i < (rows.length - 1); i++) {
-                //start by saying there should be no switching:
                 shouldSwitch = false;
-                /*Get the two elements you want to compare,
-                one from current row and one from the next:*/
+
                 x = rows[i].getElementsByTagName("TD")[5];
                 y = rows[i + 1].getElementsByTagName("TD")[5];
-                console.log(x.innerHTML.toLowerCase());
-                console.log(y.innerHTML.toLowerCase());
-                //check if the two rows should switch place:
+
                 if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
-                    //if so, mark as a switch and break the loop:
                     shouldSwitch = true;
                     break;
                 }
             }
             if (shouldSwitch) {
-                /*If a switch has been marked, make the switch
-                and mark that a switch has been done:*/
                 rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
                 switching = true;
             }
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-    function sortTable2() {
+    function sortTimeOfViewing() {
         var table, rows, switching, i, x, y, shouldSwitch;
         table = document.getElementById("moviesTable");
         switching = true;
-        /*Make a loop that will continue until
-        no switching has been done:*/
+
         while (switching) {
-            //start by saying: no switching is done:
             switching = false;
             rows = table.rows;
-            /*Loop through all table rows (except the
-            first, which contains table headers):*/
+
             for (i = 1; i < (rows.length - 1); i++) {
-                //start by saying there should be no switching:
                 shouldSwitch = false;
-                /*Get the two elements you want to compare,
-                one from current row and one from the next:*/
+            
                 x = rows[i].getElementsByTagName("TD")[3];
                 y = rows[i + 1].getElementsByTagName("TD")[3];
                 console.log(x.innerHTML.toLowerCase());
                 console.log(y.innerHTML.toLowerCase());
-                //check if the two rows should switch place:
                 if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
-                    //if so, mark as a switch and break the loop:
                     shouldSwitch = true;
                     break;
                 }
             }
             if (shouldSwitch) {
-                /*If a switch has been marked, make the switch
-                and mark that a switch has been done:*/
+  
                 rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
                 switching = true;
             }
         }
     }
 </script>
-
-
 
 <h1>Todays Films</h1>
 
@@ -112,14 +104,14 @@
                 <a>Price</a>
             </th>
             <th>
-                <a onclick="sortTable2()">Time</a>
+                <a onclick="sortTimeOfViewing()">Time</a>
             </th>
             <th>
                 <a>Salon</a>
 
             </th>
             <th>
-                <a onclick="sortTable()">Availible Seats</a>
+                <a onclick="sortAvailibleSeats()">Availible Seats</a>
             </th>
         </tr>
     </thead>
@@ -154,35 +146,32 @@
 
                         if (item.Salon.Equals("Paccino-Salon") && item.Time.Equals("16.00"))
                         {
-                            @ViewBag.firstViewingPaccinoSalon
+                            <p id="availibleSeatsFirstViewing"> @ViewBag.firstViewingPaccinoSalon</p>
                         }
                         else if (item.Salon.Equals("Paccino-Salon") && item.Time.Equals("19.00"))
                         {
-                            @ViewBag.secondViewingPaccinoSalon
+                            <p id="availibleSeatsSecondViewing"> @ViewBag.secondViewingPaccinoSalon </p>
                         }
                         else if (item.Salon.Equals("Paccino-Salon") && item.Time.Equals("21.30"))
                         {
-                            @ViewBag.thirdViewingPaccinoSalon
+                            <p id="availibleSeatsThirdViewing"> @ViewBag.thirdViewingPaccinoSalon </p>
                         }
                         else if (item.Salon.Equals("De-Niro-Salon") && item.Time.Equals("16.00"))
                         {
-                            @ViewBag.firstViewingDeNiroSalon
+                            <p id="availibleSeatsFirstViewingDeNiro">  @ViewBag.firstViewingDeNiroSalon </p>
                         }
                         else if (item.Salon.Equals("De-Niro-Salon") && item.Time.Equals("19.00"))
                         {
-                            @ViewBag.secondViewingDeNiroSalon
+                            <p id="availibleSeatsSecondViewingDeNiro">  @ViewBag.secondViewingDeNiroSalon </p>
                         }
                         else if (item.Salon.Equals("De-Niro-Salon") && item.Time.Equals("21.30"))
                         {
-                            @ViewBag.thirdViewingDeNiroSalon
+                            <p id="availibleSeatsThirdViewingDeNiro">  @ViewBag.thirdViewingDeNiroSalon </p>
                         }
                     }
-
                 </td>
                 <td>
-
                     @{
-
                         if (item.Salon.ToString().Equals("Paccino-Salon"))
                         {
                             <button class="btn btn-primary">
@@ -197,7 +186,6 @@
                         }
                     }
                 </td>
-
             </tr>
         }
     </tbody>
