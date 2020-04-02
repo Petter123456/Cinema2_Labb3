@@ -6,14 +6,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@ViewBag.movie
-@ViewBag.fullname
-@ViewBag.email
-@ViewBag.price
-@ViewBag.numberOfTickets
-@ViewBag.totalPrice
-@ViewBag.salon
-
+<head>
+    <link rel="stylesheet" href="~/css/PaccinoAndDeNiroSalons.css" />
+</head>
 
 
 @{
@@ -30,22 +25,92 @@
 }
 <h1>Payment</h1>
 
-<form method="post" action="@Url.Action("EditAvailible", salon)">
-    <label>CreditCard</label>
-    <input type="text" id="creditCard" name="creditCard" minlength="10" maxlength="10" required />
-    <label>Expiry Date</label>
-    <input type="text" id="expiryDate" name="expiryDate" minlenght="4" maxlength="4" required />
-    <label>CVC Submit</label>
-    <input type="text" id="cvc" name="cvc" required maxlength="3" minlength="3" />
-    <input name="movie" value=@ViewBag.movie readonly>
-    <input name="fullname" value=@ViewBag.fullname readonly>
-    <input name="email" value=@ViewBag.email readonly>
-    <input name="entities" value=@ViewBag.entities readonly>
-    <input name="NoOfTickets" value=@ViewBag.noTickets readonly>
-    <input name="price" value=@ViewBag.price readonly>
-    <input name="time" value=@ViewBag.time readonly>
-    <input name="salon" value=@ViewBag.salon readonly>
-    <input name="actualSeats" value=@ViewBag.actualSeats readonly>
+@*<form method="post" action="@Url.Action("EditAvailible", salon)">
+        <label>CreditCard</label>
+        <input type="text" id="creditCard" name="creditCard" minlength="10" maxlength="10" required />
+        <label>Expiry Date</label>
+        <input type="text" id="expiryDate" name="expiryDate" minlenght="4" maxlength="4" required />
+        <label>CVC Submit</label>
+        <input type="text" id="cvc" name="cvc" required maxlength="3" minlength="3" />
+        <input name="movie" value=@ViewBag.movie readonly>
+        <input name="fullname" value=@ViewBag.fullname readonly>
+        <input name="email" value=@ViewBag.email readonly>
+        <input name="entities" value=@ViewBag.entities readonly>
+        <input name="NoOfTickets" value=@ViewBag.noTickets readonly>
+        <input name="price" value=@ViewBag.price readonly>
+        <input name="time" value=@ViewBag.time readonly>
+        <input name="salon" value=@ViewBag.salon readonly>
+        <input name="actualSeats" value=@ViewBag.actualSeats readonly>
 
-    <input type="submit" />
-</form>
+        <input type="submit" />
+    </form>*@
+
+
+<div class="d-flex flex-nowrap">
+    @*div class="order-1 p-2" id="divOneTableSelectSeat">
+
+    </div>*@
+
+
+
+    <div class="order-2 p-2" id="divFormPayment">
+
+        <form method="post" action="@Url.Action("EditAvailible", salon)">
+            <div class="order-1 p-2" id="divOneFormPayment">
+
+                <label>CreditCard</label>
+                <div class="form-group">
+                    <input type="text" id="creditCard" name="creditCard" minlength="10" maxlength="10" required />
+                </div>
+                <label>Expiry Date</label>
+                <div class="form-group">
+                    <input type="text" id="expiryDate" name="expiryDate" minlenght="4" maxlength="4" required />
+                </div>
+                <label>CVC</label>
+                <div class="form-group">
+                    <input type="text" id="cvc" name="cvc" required maxlength="3" minlength="3" />
+                </div>
+                <input type="submit" class="btn btn-primary" id="submitPayment" value="Checkout" />
+            </div>
+            <div class="order-2 p-2" id="divTwoFormPayment">
+
+                <label>Movie</label>
+                <div class="form-group">
+                    <input name="movie" value=@ViewBag.movie readonly>
+                </div>
+                <label>Fullname</label>
+                <div class="form-group">
+                    <input name="fullname" value=@ViewBag.fullname readonly>
+                </div>
+                <label>Email</label>
+                <div class="form-group">
+                    <input name="email" value=@ViewBag.email readonly>
+                </div>
+                <input type="hidden" name="entities" value=@ViewBag.entities readonly>
+                <label>Number of Tickets</label>
+                <div class="form-group">
+                    <input name="NoOfTickets" value=@ViewBag.noTickets readonly>
+                </div>
+                <label>Price</label>
+                <div class="form-group">
+                    <input name="price" value=@ViewBag.price readonly>
+                </div>
+                <label>Time</label>
+                <div class="form-group">
+                    <input name="time" value=@ViewBag.time readonly>
+                </div>
+                <label>Salon</label>
+                <div class="form-group">
+                    <input name="salon" value=@ViewBag.salon readonly>
+                </div>
+                <label>Seats</label>
+                <div class="form-group">
+                    <input name="actualSeats" value=@ViewBag.actualSeats readonly>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    </div>
